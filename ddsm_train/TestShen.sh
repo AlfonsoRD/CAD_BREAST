@@ -1,10 +1,11 @@
+
 #!/bin/bash
 
-TRAIN_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TrainP"
-VAL_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ValP"
-TEST_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP"
+TRAIN_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/CBIS_train"
+VAL_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/CBIS_val"
+TEST_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/CBIS_test"
 RESUME_FROM="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ddsm_resnet50_s10_[512-512-1024]x2.h5"
-BEST_MODEL="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSM_settings2_lrsch4.h5"
+BEST_MODEL="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/CBISDDSM_resnet_nlr.2.h5"
 FINAL_MODEL="NOSAVE"
 export NUM_CPU_CORES=4
 
@@ -15,14 +16,14 @@ python image_clf_train.py \
     --no-img-scale \
     --rescale-factor 1 \
     --featurewise-center \
-    --featurewise-mean 65.3 \
+    --featurewise-mean 44.3 \
     --no-equalize-hist \
-    --batch-size 4 \
+    --batch-size 2 \
     --train-bs-multiplier 0.5 \
     --augmentation \
     --class-list neg pos \
     --nb-epoch 0 \
-    --all-layer-epochs 100 \
+    --all-layer-epochs 50 \
     --load-val-ram \
     --no-load-train-ram \
     --optimizer adam \
@@ -30,9 +31,9 @@ python image_clf_train.py \
     --hidden-dropout 0.0 \
     --weight-decay2 0.01 \
     --hidden-dropout2 0.0 \
-    --init-learningrate 0.00005 \
+    --init-learningrate 0.0001 \
     --all-layer-multiplier 0.01 \
-    --es-patience 40 \
+    --es-patience 10 \
     --auto-batch-balance \
     --best-model $BEST_MODEL \
     --final-model $FINAL_MODEL \

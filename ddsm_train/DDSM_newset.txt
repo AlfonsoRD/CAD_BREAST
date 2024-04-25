@@ -1,0 +1,109 @@
+
+train_dir=/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TrainP
+val_dir=/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ValP
+test_dir=/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP
+
+>>> Model training options: <<<
+ {'patch_model_state': None, 'resume_from': '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ddsm_resnet50_s10_[512-512-1024]x2.h5', 'img_size': [1152, 896], 'img_scale': None, 'rescale_factor': 1.0, 'featurewise_center': True, 'featurewise_mean': 44.3, 'equalize_hist': False, 'batch_size': 4, 'train_bs_multiplier': 0.5, 'augmentation': True, 'class_list': ['neg', 'pos'], 'patch_net': 'resnet50', 'block_type': 'resnet', 'top_depths': [512, 512], 'top_repetitions': [3, 3], 'bottleneck_enlarge_factor': 4, 'add_heatmap': False, 'avg_pool_size': [7, 7], 'add_conv': True, 'add_shortcut': False, 'hm_strides': [1, 1], 'hm_pool_size': [5, 5], 'fc_init_units': 64, 'fc_layers': 2, 'top_layer_nb': None, 'nb_epoch': 0, 'all_layer_epochs': 30, 'load_val_ram': True, 'load_train_ram': False, 'weight_decay': 0.001, 'hidden_dropout': 0.0, 'weight_decay2': 0.01, 'hidden_dropout2': 0.2, 'optim': 'adam', 'init_lr': 2e-07, 'lr_patience': 10, 'es_patience': 10, 'auto_batch_balance': True, 'pos_cls_weight': 1.0, 'neg_cls_weight': 1.0, 'all_layer_multiplier': 0.01, 'best_model': '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSM_cluster1_newset.h5', 'final_model': 'NOSAVE'} 
+
+Create generator for train set
+Found 1905 images belonging to 2 classes.
+Create generator for val set
+Found 207 images belonging to 2 classes.
+Loading validation set into RAM.
+Done.
+Top layer nb = None
+Start training on the top layers only
+
+>>> AUROC was not scored. No model was saved. <<<
+Done.
+Start training on all layers
+Epoch 1/30
+ - Epoch:1, AUROC:[0.50741579 0.50741579], mean=0.5074
+
+Learning Rate for Epoch 1: 1.999999943436137e-09
+
+583s - loss: 2.8078 - acc: 0.4832 - val_loss: 3.1218 - val_acc: 0.5556
+Epoch 2/30
+ - Epoch:2, AUROC:[0.53594771 0.53569633], mean=0.5358
+
+Learning Rate for Epoch 2: 1.999999943436137e-09
+
+530s - loss: 2.8588 - acc: 0.5063 - val_loss: 3.2541 - val_acc: 0.5604
+Epoch 3/30
+ - Epoch:3, AUROC:[0.51910508 0.51847662], mean=0.5188
+
+Learning Rate for Epoch 3: 1.999999943436137e-09
+
+526s - loss: 2.9294 - acc: 0.4816 - val_loss: 3.5096 - val_acc: 0.5217
+Epoch 4/30
+ - Epoch:4, AUROC:[0.53267974 0.53205128], mean=0.5324
+
+Learning Rate for Epoch 4: 1.999999943436137e-09
+
+530s - loss: 2.8061 - acc: 0.5058 - val_loss: 3.4553 - val_acc: 0.5556
+Epoch 5/30
+ - Epoch:5, AUROC:[0.51759678 0.51728255], mean=0.5174
+
+Learning Rate for Epoch 5: 1.999999943436137e-09
+
+530s - loss: 2.5340 - acc: 0.5315 - val_loss: 3.3682 - val_acc: 0.5314
+Epoch 6/30
+ - Epoch:6, AUROC:[0.5129462 0.5122549], mean=0.5126
+
+Learning Rate for Epoch 6: 1.999999943436137e-09
+
+532s - loss: 2.8222 - acc: 0.4895 - val_loss: 3.4674 - val_acc: 0.5411
+Epoch 7/30
+ - Epoch:7, AUROC:[0.51244344 0.51181498], mean=0.5121
+
+Learning Rate for Epoch 7: 1.999999943436137e-09
+
+532s - loss: 2.8852 - acc: 0.4874 - val_loss: 3.7746 - val_acc: 0.4783
+Epoch 8/30
+ - Epoch:8, AUROC:[0.53242836 0.53205128], mean=0.5322
+
+Learning Rate for Epoch 8: 1.999999943436137e-09
+
+529s - loss: 2.8588 - acc: 0.4832 - val_loss: 3.4272 - val_acc: 0.5169
+Epoch 9/30
+ - Epoch:9, AUROC:[0.51860231 0.51816239], mean=0.5184
+
+Learning Rate for Epoch 9: 1.999999943436137e-09
+
+530s - loss: 2.7919 - acc: 0.5205 - val_loss: 3.4228 - val_acc: 0.5169
+Epoch 10/30
+ - Epoch:10, AUROC:[0.53557064 0.53519356], mean=0.5354
+
+Learning Rate for Epoch 10: 1.999999943436137e-09
+
+530s - loss: 2.7227 - acc: 0.5131 - val_loss: 3.3587 - val_acc: 0.5362
+Epoch 11/30
+ - Epoch:11, AUROC:[0.50766717 0.50710156], mean=0.5074
+
+Learning Rate for Epoch 11: 1.999999943436137e-09
+
+530s - loss: 2.8844 - acc: 0.4916 - val_loss: 3.4299 - val_acc: 0.5266
+Epoch 12/30
+ - Epoch:12, AUROC:[0.53004022 0.52972599], mean=0.5299
+
+Learning Rate for Epoch 12: 1.999999943436137e-09
+
+529s - loss: 2.8163 - acc: 0.5042 - val_loss: 3.2751 - val_acc: 0.5411
+Epoch 00011: early stopping
+
+>>> Found best AUROC: 0.5358 at epoch: 2, saved to: /home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSM_cluster1_newset.h5 <<<
+>>> AUROC for all cls: [0.53594771 0.53569633] <<<
+Done.
+
+==== Training summary ====
+Minimum val loss achieved at epoch: 1
+Best val loss: 3.121844636645294
+Best val accuracy: 0.5555555555555556
+
+==== Predicting on test set ====
+Found 899 images belonging to 2 classes.
+Test samples = 899
+Load saved best model: /home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSM_cluster1_newset.h5.
+Done.
+AUROC on test set: [0.51674127 0.51656477]

@@ -101,7 +101,7 @@ for exam in GT:
         norm_cases.extend([a, b, c, d])
     
 
-def filter_data_by_label(pkl_file_path, test_size=0.15, validation_size=0.1):
+def filter_data_by_label(pkl_file_path, test_size=0.30, validation_size=0.1, random_state=2):
     # Load the data from the pkl file
     data = pd.read_pickle(pkl_file_path)
     
@@ -126,8 +126,8 @@ def filter_data_by_label(pkl_file_path, test_size=0.15, validation_size=0.1):
     
     # Split the data for each label into train, validation, and test sets
     for label, label_data in filtered_data_dict.items():
-        train_data, test_data = train_test_split(label_data, test_size=test_size, random_state=42)
-        train_data, validation_data = train_test_split(train_data, test_size=validation_size, random_state=42)
+        train_data, test_data = train_test_split(label_data, test_size=test_size, random_state=random_state)
+        train_data, validation_data = train_test_split(train_data, test_size=validation_size, random_state=random_state)
         train_data_dict[label] = train_data
         validation_data_dict[label] = validation_data
         test_data_dict[label] = test_data
@@ -136,23 +136,23 @@ def filter_data_by_label(pkl_file_path, test_size=0.15, validation_size=0.1):
 
 
 # Example usage
-train_data_dict, validation_data_dict, test_data_dict = filter_data_by_label('/home/c4ndypuff/Documentos/DDSM_Features_Otsu/ClusterDataThOtsu.pkl', test_size=0.15, validation_size=0.1)
+train_data_dict, validation_data_dict, test_data_dict = filter_data_by_label('/home/c4ndypuff/Documentos/DDSM_Features_Otsu/ClusterDataThOtsu.pkl', test_size=0.30, validation_size=0.1)
 
 
 
-def extract_filenames(class_num, data, norm_cases, mal_cases, img_number):
+def extract_filenames(class_num, data, norm_cases, mal_cases, img_number, random_state=2):
     # Get the data for the specified class number
     class_data = data[class_num]
 
     # Shuffle the data
-    shuffled_data = class_data.sample(frac=1, random_state=42)
+    shuffled_data = class_data.sample(frac=1, random_state=random_state)
 
     # Split the data into filenames from norm_cases and mal_cases
     norm_data = shuffled_data[shuffled_data['filename'].isin(norm_cases)]
     mal_data = shuffled_data[shuffled_data['filename'].isin(mal_cases)]
 
     # Calculate the number of samples to select from norm_cases and mal_cases
-    norm_count = int(0.75 * img_number)
+    norm_count = int(0.5 * img_number)
     mal_count = img_number - norm_count
 
     # Select filenames from norm_data and mal_data
@@ -160,6 +160,8 @@ def extract_filenames(class_num, data, norm_cases, mal_cases, img_number):
     mal_filenames = mal_data['filename'].tolist()[:mal_count]
 
     return mal_filenames, norm_filenames
+
+
 
 
 
@@ -215,22 +217,61 @@ for class_num in range(4):  # This will loop over numbers 0, 1, 2, 3
 
     ### For Training ###
     out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TrainP'
-    img_number = 4000
+    img_number = 4500
     data = train_data_dict
     print(f"Training Images Process of Cluster: {class_num}")
     images_to_dict(img_path, out_img_path, data, img_number)
 
     # For validation
     out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ValP'
-    img_number = 400
+    img_number = 500
     print(f"Validation Images Process of Cluster: {class_num}")
     data = validation_data_dict
     images_to_dict(img_path, out_img_path, data, img_number)
 
-    # For Test
+    # # For Test
+    # out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP'
+    # data = test_data_dict
+    # test_to_shen(class_num, data, img_path, out_img_path, mal_cases, norm_cases)
+    # For validation
     out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP'
+    print(f"Test Images Process of Cluster: {class_num}")
     data = test_data_dict
-    test_to_shen(class_num, data, img_path, out_img_path, mal_cases, norm_cases)
+    img_number = 3000
+    images_to_dict(img_path, out_img_path, data, img_number)
+    
+    
+
+
+# # Loop over clusters
+# class_num = 1
+# #General Arguments to the Cluster
+# img_path = '/home/c4ndypuff/Documentos/DDSM_PNG'
+
+# ### For Training ###
+# out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TrainP'
+# img_number = 4500
+# data = train_data_dict
+# print(f"Training Images Process of Cluster: {class_num}")
+# images_to_dict(img_path, out_img_path, data, img_number)
+
+# # For validation
+# out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ValP'
+# img_number = 500
+# print(f"Validation Images Process of Cluster: {class_num}")
+# data = validation_data_dict
+# images_to_dict(img_path, out_img_path, data, img_number)
+
+# # # For Test
+# # out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP'
+# # data = test_data_dict
+# # test_to_shen(class_num, data, img_path, out_img_path, mal_cases, norm_cases)
+# # For validation
+# out_img_path = '/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP'
+# print(f"Test Images Process of Cluster: {class_num}")
+# data = test_data_dict
+# img_number = 3000
+# images_to_dict(img_path, out_img_path, data, img_number)
 
 
 

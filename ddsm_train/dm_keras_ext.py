@@ -60,6 +60,57 @@ def step_decay_schedule(initial_lr=0.0001, decay_factor=0.5, step_size=20):
     
     
 lr_scheduler = step_decay_schedule(initial_lr=0.00001, decay_factor=0.5, step_size=10)
+
+
+class CyclicLR(Callback):
+    def __init__(self, base_lr=0.0001, max_lr=0.001, step_size=2000., mode='triangular', gamma=1.):
+        super(CyclicLR, self).__init__()
+
+        self.base_lr = base_lr
+        self.max_lr = max_lr
+        self.step_size = step_size
+        self.mode = mode
+        self.gamma = gamma
+        self.iterations = 0.
+        self.trn_iterations = 0.
+        self.history = {}
+
+    def clr(self):
+        cycle = np.floor(1 + self.trn_iterations / (2 * self.step_size))
+        x = np.abs(self.trn_iterations / self.step_size - 2 * cycle + 1)
+        if self.mode == 'triangular':
+            lr = self.base_lr + (self.max_lr - self.base_lr) * np.maximum(0, (1 - x))
+        elif self.mode == 'triangular2':
+            lr = self.base_lr + (self.max_lr - self.base_lr) * np.maximum(0, (1 - x)) / float(2**(cycle - 1))
+        elif self.mode == 'exp_range':
+            lr = self.base_lr + (self.max_lr - self.base_lr) * np.maximum(0, (1 - x)) * (self.gamma**(self.trn_iterations))
+        return lr
+
+    def on_train_begin(self, logs=None):
+        logs = logs or {}
+
+        if self.trn_iterations == 0:
+            K.set_value(self.model.optimizer.lr, self.base_lr)
+        else:
+            K.set_value(self.model.optimizer.lr, self.clr())
+
+    def on_batch_end(self, epoch, logs=None):
+        logs = logs or {}
+        self.trn_iterations += 1
+        self.iterations += 1
+
+        self.history.setdefault('lr', []).append(K.get_value(self.model.optimizer.lr))
+        self.history.setdefault('iterations', []).append(self.iterations)
+
+        for k, v in logs.items():
+            self.history.setdefault(k, []).append(v)
+
+        K.set_value(self.model.optimizer.lr, self.clr())
+
+class PrintLR(Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        lr = K.get_value(self.model.optimizer.lr)
+        print(f'Learning Rate for Epoch {epoch+1}: {lr}')
     
     
 
@@ -408,6 +459,10 @@ def do_2stage_training(model, org_model, train_generator, validation_set,
                        auc_checkpointer=None,
                        weight_decay=.0001, hidden_dropout=.0,
                        weight_decay2=.0001, hidden_dropout2=.0):
+    
+    
+    # clr = CyclicLR(base_lr=1.5e-7, max_lr=1.5e-6, step_size=2000., mode='triangular')
+
     '''2-stage DL model training (for whole images)
     '''
     if top_layer_nb is None and nb_epoch > 0:
@@ -422,10 +477,12 @@ def do_2stage_training(model, org_model, train_generator, validation_set,
     else:
         checkpointer = auc_checkpointer
     stdout_flush = DMFlush()
+    print_lr = PrintLR()
     
     ###Change for lr_scheduler###
-    callbacks = [early_stopping, checkpointer, stdout_flush, lr_scheduler]
-        
+    #callbacks = [early_stopping, checkpointer, stdout_flush, lr_scheduler]
+    callbacks = [early_stopping, checkpointer, stdout_flush, print_lr]
+            
         
     # if optim == 'sgd':
     #     reduce_lr = ReduceLROnPlateau(monitor='val_acc', factor=0.5, 

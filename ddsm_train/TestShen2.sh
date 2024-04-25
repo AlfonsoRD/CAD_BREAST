@@ -4,7 +4,7 @@ TRAIN_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/T
 VAL_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ValP"
 TEST_DIR="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/TestP"
 RESUME_FROM="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/ddsm_resnet50_s10_[512-512-1024]x2.h5"
-BEST_MODEL="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSM_settings3_lrch_5.h5"
+BEST_MODEL="/home/c4ndypuff/Documentos/end2end-all-conv-master_copia/ddsm_train/DDSMV2_settings1.1_4.h5"
 FINAL_MODEL="NOSAVE"
 export NUM_CPU_CORES=4
 
@@ -18,6 +18,7 @@ python image_clf_train.py \
     --featurewise-mean 44.33 \
     --no-equalize-hist \
     --patch-net resnet50 \
+    --no-add-shortcut \
     --block-type resnet \
     --top-depths 512 512 \
     --top-repetitions 2 2 \
@@ -25,7 +26,6 @@ python image_clf_train.py \
     --no-add-heatmap \
     --avg-pool-size 7 7 \
     --add-conv \
-    --no-add-shortcut \
     --hm-strides 1 1 \
     --hm-pool-size 5 5 \
     --fc-init-units 64 \
@@ -42,8 +42,8 @@ python image_clf_train.py \
     --weight-decay 0.0005 \
     --hidden-dropout 0.0 \
     --weight-decay2 0.0005 \
-    --hidden-dropout2 0.1 \
-    --init-learningrate 0.0001 \
+    --hidden-dropout2 0.0 \
+    --init-learningrate 0.00001 \
     --all-layer-multiplier 0.01 \
 	--lr-patience 2 \
 	--es-patience 10 \

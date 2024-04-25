@@ -2,6 +2,16 @@ ddsm_train/Resultados
 ddsm_train/full_test_1152x896
 ddsm_train/Otsu_not_feature
 ddsm_train/Features_V4
+ddsm_train/Example_model_test.ipynb
+ddsm_train/TestP
+ddsm_train/TestShen
+ddsm_train/TrainP
+ddsm_train/TrainShen
+ddsm_train/ValP
+ddsm_train/ValShen
+ddsm_train/CBIS_test
+ddsm_train/CBIS_val
+ddsm_train/CBIS_train
+end2end-all-conv-master_copia/MIAS.ipynb
 *.h5
-
 
